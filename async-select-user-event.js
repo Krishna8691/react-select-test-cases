@@ -1,17 +1,20 @@
-// "@testing-library/jest-dom": "^5.17.0",
-// "@testing-library/react": "^14.2.1",
-// "@testing-library/user-event": "^14.5.2",
-// "jest": "^27.5.1",
-
 test("react select test", async () => {
   const user = userEvent.setup();
+
   render(
-    <ReactSelect
-      options={[
-        { value: "Pear", label: "Pear" },
-        { value: "Banana", label: "Banana" },
-        { value: "Apple", label: "Apple" },
-      ]}
+    <AsyncSelect
+      defaultOptions
+      loadOptions={async () =>
+        new Promise((resolve) => {
+          setTimeout(() => {
+            resolve([
+              { value: "Pear", label: "Pear" },
+              { value: "Banana", label: "Banana" },
+              { value: "Apple", label: "Apple" },
+            ]);
+          }, 1000);
+        })
+      }
       closeMenuOnSelect={false}
       onMenuClose={() => {
         console.log("Menu closed!");
